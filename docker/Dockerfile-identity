@@ -1,0 +1,26 @@
+FROM golang:latest
+MAINTAINER Michael Dowling
+
+RUN mkdir -p _build/github.com/datumchi/go
+COPY . _build/github.com/datumchi/go
+
+RUN cd _build/github.com/datumchi/go && \
+    go get -u github.com/onsi/ginkgo/ginkgo && \
+    go get -u github.com/onsi/gomega/... && \
+    cd services/identity && \
+    go build && \
+    go install
+
+RUN rm -Rf _build
+
+RUN mkdir -p /etc/tls && \
+    mkdir -p /opt/logs
+
+ENV DATUMCHI_SERVICE_HOST=identity
+ENV DATUMCHI_SERVICE_PORT=9001
+
+VOLUME /etc/tls
+VOLUME /opt/logs
+
+CMD ["identity", "start"]
+

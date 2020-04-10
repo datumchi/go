@@ -1,7 +1,9 @@
 package main
 
-import "github.com/datumchi/go/utility/logger"
+import (
+	"github.com/datumchi/go/services/identity/cmd"
+)
 
 func main() {
-	logger.Infof("DATUMCHI IDENTITY SERVICE")
+	cmd.Execute()
 }
