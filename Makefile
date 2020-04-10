@@ -55,3 +55,8 @@ hborderer-dockerpush:
 	docker push 248181394449.dkr.ecr.us-west-2.amazonaws.com/datumchi/hborderer:latest
 ################### END HEARTBEAT ORDERER ########################
 
+
+
+generate-protocol:
+	mkdir -p ./generated/protocol
+	protoc -I=../protocol/protobuf --go_out=plugins=grpc:./generated/protocol ../protocol/protobuf/*.proto
