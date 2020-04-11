@@ -2,29 +2,32 @@ package dns
 
 import (
 	"errors"
+	"github.com/datumchi/go/naming"
 	"net"
 	"regexp"
 	"strings"
 )
 
-type DomainDefinition struct {
-	Domain string
-	PublicKey string
-	Signature string
-	IdentityServiceHost string
-	IdentityServicePort uint16
-	CollabServiceHost string
-	CollabServicePort uint16
+type DNSDomainDefinition struct {
+	PublicKeyRegExp *regexp.Regexp
+	SignatureRegExp *regexp.Regexp
 }
 
-var publicKeyRegExp = regexp.MustCompile(`v=datumchi_pubkey; k=(.*)`)
-var signatureRegExp = regexp.MustCompile(`v=datumchi_signature; s=(.*)`)
+func CreateDNSDomainDefinition() DNSDomainDefinition {
 
+	domainDefinition := DNSDomainDefinition{
+		PublicKeyRegExp: regexp.MustCompile(`v=datumchi_pubkey; k=(.*)`),
+		SignatureRegExp: regexp.MustCompile(`v=datumchi_signature; s=(.*)`),
+	}
 
-func GetDomainDefinition(domain string) (DomainDefinition, error) {
+	return domainDefinition
 
-	domainDefinition := DomainDefinition{
-		Domain:domain,
+}
+
+func (dd DNSDomainDefinition) GetDomainDefinition(domain string) (naming.DomainDefinition, error) {
+
+	domainDefinition := naming.DomainDefinition{
+		Domain: domain,
 	}
 
 	textEntries, err := net.LookupTXT(domain)
@@ -45,12 +48,12 @@ func GetDomainDefinition(domain string) (DomainDefinition, error) {
 	for _, entry := range textEntries {
 
 		if strings.Contains(entry, "v=datumchi_pubkey") {
-			err = parsePublicKey(entry, &domainDefinition)
+			err = dd.parsePublicKey(entry, &domainDefinition)
 			if err != nil {
 				return domainDefinition, err
 			}
 		} else if strings.Contains(entry, "v=datumchi_signature") {
-			err = parseSignature(entry, &domainDefinition)
+			err = dd.parseSignature(entry, &domainDefinition)
 			if err != nil {
 				return domainDefinition, err
 			}
@@ -58,9 +61,7 @@ func GetDomainDefinition(domain string) (DomainDefinition, error) {
 			return domainDefinition, errors.New("Proper Text Entries Not Found")
 		}
 
-
 	}
-
 
 	if len(srvIdentityEntries) > 0 {
 		domainDefinition.IdentityServiceHost = srvIdentityEntries[0].Target
@@ -76,14 +77,13 @@ func GetDomainDefinition(domain string) (DomainDefinition, error) {
 		return domainDefinition, errors.New("No SRV collaboration entries found")
 	}
 
-
 	return domainDefinition, nil
 
 }
 
-func parsePublicKey(entry string, domainDefinition *DomainDefinition) error {
+func (dd DNSDomainDefinition) parsePublicKey(entry string, domainDefinition *naming.DomainDefinition) error {
 
-	submatches := publicKeyRegExp.FindStringSubmatch(entry)
+	submatches := dd.PublicKeyRegExp.FindStringSubmatch(entry)
 	if len(submatches) != 2 {
 		return errors.New("Unable to parse pubkey entry (TXT)")
 	}
@@ -93,9 +93,9 @@ func parsePublicKey(entry string, domainDefinition *DomainDefinition) error {
 
 }
 
-func parseSignature(entry string, domainDefinition *DomainDefinition) error {
+func (dd DNSDomainDefinition) parseSignature(entry string, domainDefinition *naming.DomainDefinition) error {
 
-	submatches := signatureRegExp.FindStringSubmatch(entry)
+	submatches := dd.SignatureRegExp.FindStringSubmatch(entry)
 	if len(submatches) != 2 {
 		return errors.New("Unable to parse signature entry (TXT)")
 	}
@@ -104,4 +104,3 @@ func parseSignature(entry string, domainDefinition *DomainDefinition) error {
 	return nil
 
 }
-
