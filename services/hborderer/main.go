@@ -1,7 +1,9 @@
 package main
 
-import "github.com/datumchi/go/utility/logger"
+import (
+	"github.com/datumchi/go/services/hborderer/cmd"
+)
 
 func main() {
-	logger.Infof("DATUMCHI HEARTBEAT ORDERER SERVICE")
+	cmd.Execute()
 }
