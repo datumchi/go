@@ -32,6 +32,5 @@ func init() {
 func initConfig() {
 
 	logger.Infof("*******DatumChi Tools*******")
-	logger.Infof("keygen")
 
 }
