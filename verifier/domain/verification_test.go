@@ -10,12 +10,12 @@ var _ = Describe("Verification", func() {
 
 		Context("Using a correct domain definition", func() {
 
-			// var domainDefinition dns.DomainDefinition
+			// var domainDefinition dnsconfig.DomainDefinition
 
 
 			BeforeEach(func() {
 
-				//domainDefinition = dns.DomainDefinition {
+				//domainDefinition = dnsconfig.DomainDefinition {
 				//	Domain:"alpha.fairx.io",
 				//	PublicKey:"Z5UWZC4ED7IQUUDYCSBU2WGHAXASHUTHQN66X7CZJX7IZL6AEY2Q",
 				//	Signature:"HOWRNFPJD432AQTAAVYNNLNLTRM4TVHCADJCQFTYBRUH5LRDZJI4M2XQ4VTPOSFU2NDVUE3GQOGFVUB7OQWZTSWLEO7GLYRIZ33WYBQ",

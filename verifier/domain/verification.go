@@ -4,10 +4,10 @@ import (
 	"github.com/datumchi/go/crypto/ed25519"
 	"github.com/datumchi/go/crypto/sha512"
 	"github.com/datumchi/go/encoding"
-	"github.com/datumchi/go/naming/dns"
+	"github.com/datumchi/go/naming"
 )
 
-func VerifyDomainDefinition(definition dns.DomainDefinition) bool {
+func VerifyDomainDefinition(definition naming.DomainDefinition) bool {
 
 	// decode pubkey and signature
 	pubkey, err := encoding.Decode(definition.PublicKey)
