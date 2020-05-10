@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/fsnotify/fsnotify v1.4.9 // indirect
+	github.com/gogo/protobuf v1.2.1
 	github.com/golang/protobuf v1.3.5
 	github.com/mitchellh/mapstructure v1.2.2 // indirect
 	github.com/onsi/ginkgo v1.12.0
