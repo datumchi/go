@@ -54,11 +54,11 @@ func CreateConfiguration() Configuration {
 	viper.SetDefault(JWT_KEY, string(randomJwtKey))
 
 	viper.SetDefault(IDENTITY_STORE, STORE_TYPE_FILE)
-	viper.SetDefault(IDENTITY_STORE_FILE_BASE_DIR, "/tmp/fairx/identity")
+	viper.SetDefault(IDENTITY_STORE_FILE_BASE_DIR, "/tmp/datumchi/identity")
 	viper.SetDefault(IDENTITY_STORE_FILE_SECURITY_MODULE, "SIMPLE")
 
 	viper.SetDefault(DEVICE_STORE, STORE_TYPE_FILE)
-	viper.SetDefault(DEVICE_STORE_FILE_BASE_DIR, "/tmp/fairx/device")
+	viper.SetDefault(DEVICE_STORE_FILE_BASE_DIR, "/tmp/datumchi/device")
 
 	loadedConfiguration.Loaded = true
 	return loadedConfiguration
