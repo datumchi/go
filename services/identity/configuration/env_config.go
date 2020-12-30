@@ -11,27 +11,25 @@ type Configuration struct {
 }
 
 var (
-	SERVICE_HOST = "SERVICE_HOST"
-	SERVICE_PORT = "SERVICE_PORT"
+	SERVICE_HOST    = "SERVICE_HOST"
+	SERVICE_PORT    = "SERVICE_PORT"
 	TLS_SERVER_CERT = "TLS_SERVER_CERT"
-	TLS_SERVER_KEY = "TLS_SERVER_KEY"
-	TLS_CA_CERT = "TLS_CA_CERT"
+	TLS_SERVER_KEY  = "TLS_SERVER_KEY"
+	TLS_CA_CERT     = "TLS_CA_CERT"
 
-	DOMAIN = "DOMAIN"
-	VERIFY_DOMAIN="VERIFY_DOMAIN"
+	DOMAIN        = "DOMAIN"
+	VERIFY_DOMAIN = "VERIFY_DOMAIN"
 
 	JWT_KEY = "JWT_KEY"
 
-	IDENTITY_STORE = "IDENTITY_STORE"
-	IDENTITY_STORE_FILE_BASE_DIR = "IDENTITY_STORE_FILE_BASE_DIR"
+	IDENTITY_STORE                      = "IDENTITY_STORE"
+	IDENTITY_STORE_FILE_BASE_DIR        = "IDENTITY_STORE_FILE_BASE_DIR"
 	IDENTITY_STORE_FILE_SECURITY_MODULE = "IDENTITY_STORE_FILE_SECURITY_MODULE"
 
-	DEVICE_STORE = "DEVICE_STORE"
-	DEVICE_STORE_FILE_BASE_DIR = "DEVICE_STORE_FILE_BASE_DIR"
+	IDENTITY_AUTHENTICATION_SCHEME = "IDENTITY_AUTHENTICATION_SCHEME"
 
 	loadedConfiguration Configuration
 )
-
 
 func CreateConfiguration() Configuration {
 
@@ -57,14 +55,12 @@ func CreateConfiguration() Configuration {
 	viper.SetDefault(IDENTITY_STORE_FILE_BASE_DIR, "/tmp/fairx/identity")
 	viper.SetDefault(IDENTITY_STORE_FILE_SECURITY_MODULE, "SIMPLE")
 
-	viper.SetDefault(DEVICE_STORE, STORE_TYPE_FILE)
-	viper.SetDefault(DEVICE_STORE_FILE_BASE_DIR, "/tmp/fairx/device")
+	viper.SetDefault(IDENTITY_AUTHENTICATION_SCHEME, IDENTITY_AUTHENTICATION_SCHEME_LOCAL_MEMORY)
 
 	loadedConfiguration.Loaded = true
 	return loadedConfiguration
 
 }
-
 
 func (c Configuration) ServiceHost() string {
 	return viper.GetString(SERVICE_HOST)
@@ -102,12 +98,8 @@ func (c Configuration) IdentityStoreFileSecurityModule() string {
 	return viper.GetString(IDENTITY_STORE_FILE_SECURITY_MODULE)
 }
 
-func (c Configuration) DeviceStore() string {
-	return viper.GetString(DEVICE_STORE)
-}
-
-func (c Configuration) DeviceStoreFileBaseDir() string {
-	return viper.GetString(DEVICE_STORE_FILE_BASE_DIR)
+func (c Configuration) IdentityAuthenticationScheme() string {
+	return viper.GetString(IDENTITY_AUTHENTICATION_SCHEME)
 }
 
 func (c Configuration) JWTKey() string {
@@ -123,5 +115,3 @@ func (c Configuration) VerifyDomain() bool {
 	return false
 
 }
-
-

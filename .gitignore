@@ -4,3 +4,4 @@ gomock_reflect*
 services/identity/identity
 services/collaboration/collaboration
 services/hborderer/hborderer
+utility/wallet/wallet

@@ -2,10 +2,10 @@ package service
 
 import (
 	"fmt"
+	"github.com/datumchi/go/domain"
 	"github.com/datumchi/go/generated/protocol"
 	"github.com/datumchi/go/naming"
 	"github.com/datumchi/go/services/identity/configuration"
-	"github.com/datumchi/go/services/identity/domain"
 	"github.com/datumchi/go/utility/logger"
 	"net"
 	"os"
@@ -20,7 +20,7 @@ func Start() {
 
 	// Check to see if we should perform domain verification, including domain key and etc.
 	var domainDefinition naming.DomainDefinition
-	var verifiedFlag bool = false
+	var verifiedFlag = false
 	config := configuration.CreateConfiguration()
 
 	if config.VerifyDomain() {
@@ -38,11 +38,9 @@ func Start() {
 
 		// populate domain definition here
 
-
 	}
 	logger.Infof("(%s) Domain Public Key:  %s", config.Domain(), domainDefinition.PublicKey)
 	logger.Infof("(%s)  Domain Signature:  %s", config.Domain(), domainDefinition.Signature)
-
 
 	// Check each blob storage configuration and configure identity service
 	identityServiceServer, err := CreateIdentityService()
