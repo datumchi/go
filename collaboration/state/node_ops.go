@@ -36,7 +36,7 @@ func GetOrCreateNodePath(rootNode *protocol.CollaborationState_Node, nodePath st
 				return protocol.CollaborationState_Node{}
 			}
 
-			
+
 
 
 		}
